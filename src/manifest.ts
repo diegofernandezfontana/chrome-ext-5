@@ -15,7 +15,7 @@ const manifest = {
   },
   content_scripts: [
     {
-      js: ["src/entries/contentScript/primary/main.tsx"],
+      js: ["src/app/main.tsx"],
       matches: ["*://*/*"],
     },
   ],
@@ -32,10 +32,11 @@ const manifest = {
     256: "icons/256.png",
     512: "icons/512.png",
   },
-  options_ui: {
+  /*  options_ui: {
     page: "src/entries/options/index.html",
     open_in_tab: true,
   },
+  */
 };
 
 export function getManifest(): chrome.runtime.ManifestV3 {
