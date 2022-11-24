@@ -5,7 +5,6 @@ export default async function renderContent(
   render: (appRoot: HTMLElement) => void
 ) {
   const appContainer = document.createElement("div");
-  addStyleToMainSidebar(appContainer);
 
   const shadowRoot = appContainer.attachShadow({
     mode: import.meta.env.DEV ? "open" : "closed",
@@ -40,11 +39,17 @@ export default async function renderContent(
     }, twoSeconds);
   }
 
+  addStyleToMainSidebar(appContainer);
+  addStyleToRootElement(appRoot);
   //  firstElement.insertBefore(firstElement, appContainer);
   document.body.appendChild(appContainer);
 
   render(appRoot);
 }
+
+const addStyleToRootElement = (appRoot: HTMLElement) => {
+  appRoot.style.height = "100%";
+};
 
 const addStyleToMainSidebar = (container: HTMLElement) => {
   container.style.position = "absolute";
@@ -53,4 +58,5 @@ const addStyleToMainSidebar = (container: HTMLElement) => {
   container.style.display = "block";
   container.style.top = "0px";
   container.style.maxHeight = "100%";
+  container.style.zIndex = "1100"; //akhq sidebar has 1006
 };
