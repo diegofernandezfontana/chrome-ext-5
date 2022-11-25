@@ -1,12 +1,15 @@
 import browser from "webextension-polyfill";
+import { Sidebar } from "~/application/application/Sidebar";
 
 export default async function renderContent(
   cssPaths: string[],
-  render: (appRoot: HTMLElement) => void
+  renderExtension: (appRoot: HTMLElement) => void
 ) {
-  const appContainer = document.createElement("div");
+  const sidebar = new Sidebar();
 
-  const shadowRoot = appContainer.attachShadow({
+  const rootElement = document.createElement("div");
+
+  const shadowRoot = rootElement.attachShadow({
     mode: import.meta.env.DEV ? "open" : "closed",
   });
 
@@ -24,39 +27,15 @@ export default async function renderContent(
       shadowRoot.appendChild(styleEl);
     });
   }
-  // Application
-  const appRoot = document.createElement("div");
+  //rootElement
+  // Shadow root
+  // appRoot
+
+  const appRoot = sidebar.appRoot;
   shadowRoot.appendChild(appRoot);
+  sidebar.addStyleToMainSidebar(rootElement);
+  sidebar.addStyleToRootElement();
+  document.body.appendChild(rootElement);
 
-  let firstElement: HTMLElement;
-  firstElement = document.getElementsByTagName("body")[0];
-
-  // If root element is not found, wait for 2 secconds, if not, good luck :)
-  if (!firstElement) {
-    const twoSeconds = 2000;
-    setTimeout(() => {
-      firstElement = document.getElementsByTagName("div")[0];
-    }, twoSeconds);
-  }
-
-  addStyleToMainSidebar(appContainer);
-  addStyleToRootElement(appRoot);
-  //  firstElement.insertBefore(firstElement, appContainer);
-  document.body.appendChild(appContainer);
-
-  render(appRoot);
+  sidebar.render(renderExtension);
 }
-
-const addStyleToRootElement = (appRoot: HTMLElement) => {
-  appRoot.style.height = "100%";
-};
-
-const addStyleToMainSidebar = (container: HTMLElement) => {
-  container.style.position = "absolute";
-  container.style.width = "400px";
-  container.style.height = "100vh";
-  container.style.display = "block";
-  container.style.top = "0px";
-  container.style.maxHeight = "100%";
-  container.style.zIndex = "1100"; //akhq sidebar has 1006
-};
