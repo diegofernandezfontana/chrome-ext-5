@@ -50,8 +50,11 @@ type ButtonEnvProps = {
 
 const ButtonEnv: React.FC<ButtonEnvProps> = ({ env }) => {
   return (
-    <button onClick={() => changeUrlToEnv(env)}>
-      Change enviroment to {env}
+    <button
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      onClick={() => changeUrlToEnv(env)}
+    >
+      Go to {env}
     </button>
   );
 };
@@ -62,9 +65,7 @@ function App() {
       <div className="mx-auto max-w-7xl z-max">
         <div className="relative text-black">
           <ButtonEnv env="PRD" />
-          <br />
           <ButtonEnv env="STG" />
-          <br />
           <ButtonEnv env="INT" />
         </div>
       </div>

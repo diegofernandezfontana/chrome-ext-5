@@ -5,9 +5,9 @@ export default async function renderContent(
   cssPaths: string[],
   renderExtensionFn: (appRoot: HTMLElement) => void
 ) {
-  const sidebar = new Sidebar(cssPaths);
+  const sidebar = new Sidebar(cssPaths, renderExtensionFn);
   const rootElement = sidebar.getRootElementWithShadowRootAndAppInserted();
   document.body.appendChild(rootElement);
 
-  sidebar.render(renderExtensionFn);
+  //MISSING THIS sidebar.render(renderExtensionFn);
 }
