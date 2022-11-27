@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       zIndex: {
-        container: "997",
-        max: "9999",
+        container: "1200",
+        max: "1201",
       },
     },
   },

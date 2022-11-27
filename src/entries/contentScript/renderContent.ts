@@ -1,4 +1,3 @@
-import browser from "webextension-polyfill";
 import { Sidebar } from "~/application/application/Sidebar";
 
 export default async function renderContent(
@@ -7,7 +6,6 @@ export default async function renderContent(
 ) {
   const sidebar = new Sidebar(cssPaths, renderExtensionFn);
   const rootElement = sidebar.getRootElementWithShadowRootAndAppInserted();
-  document.body.appendChild(rootElement);
 
-  //MISSING THIS sidebar.render(renderExtensionFn);
+  document.body.appendChild(rootElement);
 }

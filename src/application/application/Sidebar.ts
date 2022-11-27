@@ -1,4 +1,4 @@
-import browser, { Browser } from "webextension-polyfill";
+import browser from "webextension-polyfill";
 export class Sidebar {
   // rootelement -> shadowroot 1-> appRoot
   //                           2-> buttonRoot
@@ -28,18 +28,24 @@ export class Sidebar {
 
     this.appRoot = document.createElement("div");
 
+    this.addStyleToRootElement();
     this.addStyleToShadowRoot();
+
     this.appendButtonToShadowRoot();
+
+    this.shadowRoot.appendChild(this.appRoot);
   }
 
   private appendButtonToShadowRoot() {
     let btn = document.createElement("button");
-    btn.innerHTML = "Expand";
+    btn.innerHTML = "Open Favorites";
 
     btn.addEventListener("click", () => {
       this.toggleDisplay();
     });
     btn.style.zIndex = "1120"; //
+    btn.className =
+      "px-8 py-2 mt-4 font-semibold transition duration-150 ease-in-out hover:bg-sky-500 bg-sky-400 rounded text-white";
     this.buttonRoot.append(btn);
 
     this.shadowRoot.appendChild(this.buttonRoot);
@@ -63,22 +69,11 @@ export class Sidebar {
   }
 
   public getRootElementWithShadowRootAndAppInserted(): HTMLDivElement {
-    this.shadowRoot.appendChild(this.appRoot);
-    this.addStyleToRootElement();
-    this.addStyleToAppElement();
-
     return this.rootElement;
   }
 
-  render(renderFn: (div: any) => void) {
+  private render(renderFn: (div: any) => void) {
     renderFn(this.appRoot);
-  }
-
-  public addStyleToAppElement() {
-    if (this.isOpen) {
-      this.appRoot.style.height = "100%";
-      this.appRoot.style.border = "3px solid blue";
-    }
   }
 
   private toggleDisplay() {
@@ -93,17 +88,8 @@ export class Sidebar {
 
   public addStyleToRootElement = () => {
     this.rootElement.style.position = "absolute";
-    this.rootElement.style.width = "400px";
-    this.rootElement.style.border = "2px solid red";
-    this.rootElement.style.display = "block";
     this.rootElement.style.top = "0px";
-    this.rootElement.style.zIndex = "1100"; //akhq sidebar has 1006
 
-    if (this.isOpen) {
-      this.rootElement.style.height = "100%";
-    } else {
-      this.rootElement.style.height = "100px";
-      this.rootElement.style.border = "10px solid green";
-    }
+    this.rootElement.style.zIndex = "1200"; //akhq sidebar has 1006
   };
 }

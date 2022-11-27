@@ -13,6 +13,7 @@ const manifest = {
   background: {
     service_worker: "src/entries/background/main.ts",
   },
+  //  permissions: ["storage" as any],
   content_scripts: [
     {
       js: ["src/app/main.tsx"],
@@ -40,6 +41,7 @@ const manifest = {
 };
 
 export function getManifest(): chrome.runtime.ManifestV3 {
+  console.log(manifest, "manifest");
   return {
     author: pkg.author,
     description: pkg.description,
